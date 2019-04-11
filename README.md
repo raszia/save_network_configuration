@@ -1,4 +1,4 @@
-# Save_network_configuration
+# Save_Network_Configuration_Linux
 Save your network configuration in a bash script
 
 require iproute2 package, by default is installed on most distros.
