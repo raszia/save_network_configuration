@@ -53,5 +53,6 @@ def save_network_on_file():
     with open(startup_file, 'w') as file:
        file.write(command)
 
+    
 if __name__== "__main__":
     save_network_on_file()
