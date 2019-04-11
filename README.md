@@ -6,4 +6,5 @@ executing this script will create a network.save file and save your network conf
 network.save is a bash script you can use it later. don't forget execute permission for network.save
 
 chmod +x save_my_network.py
+
 ./save_my_network.py  #executing this script will create a network.save 
