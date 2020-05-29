@@ -48,7 +48,7 @@ def save_network_on_file():
     route = route.stdout
     route = route.splitlines()
     for line in route:
-        command.append("ip route add "+line+"\n")
+        command.append("ip route add "+line.decode("utf-8") +"\n")
     command = ''.join(command)
     with open(startup_file, 'w') as file:
        file.write(command)
