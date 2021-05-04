@@ -4,6 +4,10 @@ import sys
 import shlex
 from subprocess import Popen, PIPE, STDOUT
 
+# Set to True to save the rule numbers
+INCLUDE_RULE_NUMBER = False
+
+
 class Result:
     pass
 
@@ -49,10 +53,22 @@ def save_network_on_file():
     route = route.splitlines()
     for line in route:
         command.append("ip route add "+line.decode("utf-8") +"\n")
+
+    rule = cmd_noerror("ip rule list")
+    rule = rule.stdout
+    rule = rule.splitlines()
+    for line in rule:
+        if INCLUDE_RULE_NUMBER is False:
+            line = line.decode("utf-8").split(':')[1].strip()
+        else:
+            line = line.decode("utf-8").strip()
+        line = "ip rule add " + line + "\n"
+        command.append(line)
+
     command = ''.join(command)
     with open(startup_file, 'w') as file:
        file.write(command)
 
-    
+
 if __name__== "__main__":
     save_network_on_file()
