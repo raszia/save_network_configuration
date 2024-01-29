@@ -86,13 +86,25 @@ def append_rules(commands, rule_lines):
             line_str = line_str.split(':')[1].strip()
         commands.append(f"ip rule add {line_str}\n")
 
+def get_directories(path):
+    try:
+        # Get a list of all items in the directory
+        all_items = os.listdir(path)
+
+        # Filter out files and get only directories
+        directories = [item for item in all_items if os.path.isdir(os.path.join(path, item))]
+
+        return directories
+    except OSError as e:
+        print(f"Error: {e}")
+        return []
 
 def save_network_config_to_file(filename='network.sh'):
     command = "ip"
     if not check_command_exists(command):
         print("Error: 'ip' command not found. Please ensure you have the 'iproute2' package installed.")
         return
-    interfaces = os.listdir('/sys/class/net/')
+    interfaces = get_directories('/sys/class/net/')
     commands = ["#!/bin/bash\n"]
     dynamic_interfaces = get_dynamic_interfaces(
         interfaces) if DISABLE_DHCP_INTERFACES else set()
